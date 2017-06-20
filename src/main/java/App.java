@@ -15,12 +15,12 @@ public class App {
 
     public static void main(String[] args){
         Client client = Client.create();
-        printList(getPlaces(client, null, "login","password"));
+        printList(getPlaces(client, null));
         System.out.println();
-        printList(getPlaces(client,"Исаакиевский собор", "login", "password"));
+        printList(getPlaces(client,"Исаакиевский собор"));
     }
 
-    private static List<Place> getPlaces(Client client, String name, String login, String password){
+    private static List<Place> getPlaces(Client client, String name){
         WebResource webResource = client.resource(URL);
         if(name != null){
             webResource=webResource.queryParam("word",name);
