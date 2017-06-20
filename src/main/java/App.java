@@ -25,14 +25,13 @@ public class App {
         if(name != null){
             webResource=webResource.queryParam("word",name);
         }
-        if (login != null) {
-            webResource = webResource.queryParam("login", login);
-        }
+        ClientResponse response =
+                webResource.accept(MediaType.APPLICATION_JSON)
+                        .header("login", "login")
+                        .header("password", "password")
+                        .post(ClientResponse.class);
+        System.out.println(response.getStatus());
 
-        if (password!=null){
-            webResource = webResource.queryParam("password", password);
-        }
-        ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         if(response.getStatus()!=ClientResponse.Status.OK.getStatusCode()){
             throw new IllegalStateException("Request failed");
         }
