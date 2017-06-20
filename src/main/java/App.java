@@ -15,15 +15,22 @@ public class App {
 
     public static void main(String[] args){
         Client client = Client.create();
-        printList(getPlaces(client, null));
+        printList(getPlaces(client, null, "login","password"));
         System.out.println();
-        printList(getPlaces(client,"Исаакиевский собор"));
+        printList(getPlaces(client,"Исаакиевский собор", "login", "password"));
     }
 
-    private static List<Place> getPlaces(Client client, String name){
+    private static List<Place> getPlaces(Client client, String name, String login, String password){
         WebResource webResource = client.resource(URL);
         if(name != null){
             webResource=webResource.queryParam("word",name);
+        }
+        if (login != null) {
+            webResource = webResource.queryParam("login", login);
+        }
+
+        if (password!=null){
+            webResource = webResource.queryParam("password", password);
         }
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         if(response.getStatus()!=ClientResponse.Status.OK.getStatusCode()){
